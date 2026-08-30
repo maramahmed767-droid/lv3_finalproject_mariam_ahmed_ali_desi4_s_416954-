@@ -6,7 +6,7 @@ popularity, programming languages, and activity.
 ## How to Run
 
 ```bash
-pip install requests pandas matplotlib
+pip install -r requirements.txt
 python task1_data_collection.py      # -> github_projects.csv
 python task2_sql_analysis.py         # -> github_projects.db + printed SQL results
 python task2_visualize.py            # -> top10_repos.png, creation_trend.png
@@ -19,15 +19,55 @@ python task2_visualize.py            # -> top10_repos.png, creation_trend.png
 | `task1_data_collection.py` | Collects, cleans, and saves data → `github_projects.csv` |
 | `task2_sql_analysis.py` | Loads data into SQLite (`Repositories` table) and runs all required SQL queries |
 | `task2_visualize.py` | Creates the two required charts |
+| `requirements.txt` | Python dependencies |
 
-## Step 8 (Task 2): Interpretation of Results
+## Data Scope / Limitation
 
-*(Fill this in after running the scripts — a few sentences per point)*
+The GitHub Search API returns at most 100 results per page. This dataset
+is the **top 100 most-starred repositories matching "machine learning"**
+at the time of collection - not every ML repository on GitHub. It is a
+sample biased toward large, already-popular projects, so findings below
+describe this sample, not the full ML ecosystem on GitHub.
 
-- **Most popular repositories:** which repos/owners dominate, and why they might be popular (framework vs. course vs. dataset repo, etc.)
-- **Language trends:** which languages have the most ML repos, and whether that matches expectations (e.g. Python's dominance in ML)
-- **Creation trend over time:** is repo creation increasing, peaking in a certain year, slowing down recently?
-- **Any surprising finding** worth calling out.
+## Task 2, Step 8: Interpretation of Results
+
+**Most popular repositories:** `tensorflow` (197,616 stars) and
+`transformers` (164,423 stars) lead by a wide margin over the rest of
+the top 10 (the third-place `ML-For-Beginners` has under 90,000). Both
+are backed by major organizations (Google and Hugging Face), which
+explains their scale - large corporate backing, long project history,
+and being foundational infrastructure that thousands of other projects
+depend on all drive sustained star growth. Several other top-10 entries
+(`awesome-machine-learning`, `500-AI-Machine-learning-...`) are
+curated "awesome list" repositories rather than actual code frameworks,
+showing that popularity in this sample reflects both usefulness as a
+tool and usefulness as a learning/reference resource.
+
+**Language trends:** Python dominates with 30 of the 100 repositories,
+followed by "Unknown" (23 - repos with no primary language detected,
+often documentation-only or awesome-list repos) and Jupyter Notebook
+(19). Together Python and Jupyter Notebook account for about half the
+dataset, which matches the expectation that Python is the de facto
+standard language for machine learning tooling and experimentation.
+C++ (12) appears mostly in performance-critical libraries (e.g. core
+ML frameworks with C++ backends).
+
+**Creation trend over time:** Repository creation rises steadily from
+2009, accelerates sharply from 2014 onward, and peaks in 2018 (18 new
+repos in this sample), coinciding with the height of the deep-learning
+boom and mainstream adoption of frameworks like TensorFlow and PyTorch.
+Creation counts drop off after 2018 and continue declining through 2024.
+This does not necessarily mean ML repository creation is slowing down
+overall - it more likely reflects that this sample only contains
+repositories that have already accumulated enough stars to rank in the
+top 100, and newer repositories haven't had time to accumulate as many
+stars yet (a form of survivorship/recency bias in star-sorted data).
+
+**Surprising finding:** Almost a quarter of the top 100 repositories
+have no detected primary language ("Unknown"). This is a reminder that
+"top starred" does not mean "actively maintained code" - a meaningful
+share of highly-starred ML repositories are curated lists, datasets, or
+documentation rather than software projects.
 
 ## Task 3: Git & GitHub Publishing Steps
 
@@ -47,13 +87,15 @@ git commit -m "Initial commit: GitHub ML repos data analytics project"
 # then copy its URL, e.g. https://github.com/<your-username>/<repo-name>.git
 
 # Step 5: Connect and push
-git remote add origin https://github.com/<your-username>/<repo-name>.git
+git remote add origin https://github.com/maramahmed767-droid/lv3_finalproject_mariam_ahmed_ali_desi4_s_416954-.git
 git branch -M main
 git push -u origin main
 ```
 
-Take screenshots after each of these commands (init, status, add, commit,
-remote add, push) as required evidence for Step 6.
+Take a screenshot after each of these commands (init, status, add, commit,
+remote add, push) — these are the required evidence for Step 6, and they
+cannot be generated for you; they must show your own terminal and your
+own GitHub repository.
 
 ## Task 3, Step 7: Ethics Reflection
 
@@ -91,3 +133,17 @@ available through GitHub's official API (stars, forks, language,
 license, dates). No private repository content or personal user data is
 collected. This work is for educational purposes as part of a data
 analytics course.
+
+## Step 8 (Task 2): Interpretation of Results
+
+    Most popular repositories:
+    The top-starred repository in the dataset is tensorflow by tensorflow with 197,616 stars, followed by transformers by huggingface (164,423 stars). Frameworks, deep learning libraries, and comprehensive learning repositories (like ML-For-Beginners) dominate the highest star counts because they serve as essential foundational tools for the global developer community.
+
+    Language trends:
+    Python is the undisputed dominant programming language in Machine Learning, representing the majority of primary repositories (30 repos), followed by Jupyter Notebooks (19 repos) and C++ (12 repos). C++ is typically chosen for high-performance low-level implementations and inference engines (such as TensorFlow core), while Python and Jupyter Notebooks lead in accessibility, experimentation, and rapid prototyping.
+
+    Creation trend over time:
+    Machine Learning repository creation experienced massive growth starting around 2014, reaching its historical peak between 2016 and 2018 (with 18 repositories created in 2018 alone). After 2018, the creation rate of new top-starred repos slowed down, indicating that the core ML ecosystem became consolidated around established, long-standing open-source projects.
+
+    Surprising finding:
+Several of the top-starred repositories are not tools or libraries at all, but curated educational/reference lists — such as ML-For-Beginners, awesome-machine-learning, and funNLP. This shows that a large part of what developers search for and star in the ML space is learning material and curated resources, not just production-ready code.
